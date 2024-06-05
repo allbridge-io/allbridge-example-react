@@ -111,6 +111,7 @@ function Demo() {
         if (sourceToken?.chainSymbol !== walletProvider?.chainSymbol) {
             disconnect();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sourceToken, destinationToken]);
 
     useEffect(() => {
@@ -127,6 +128,7 @@ function Demo() {
             return;
         }
         calcReceivedAmount(amount, sourceToken, destinationToken);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [amount, fee]);
 
     return (
