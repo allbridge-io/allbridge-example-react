@@ -48,7 +48,7 @@ To run this project locally, follow these steps:
     npm start
     ```
 
-Visit `http://localhost:3000` in your browser to see the demo in action.
+Visit `http://localhost:3000/allbridge-example-react/demo` in your browser to see the demo in action.
 
 ## License
 

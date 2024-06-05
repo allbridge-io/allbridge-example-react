@@ -14,7 +14,7 @@ const Providers: React.FC<Props> = ({children}) => {
     return (
         <React.StrictMode>
             <ThemeProvider theme={theme}>
-                <BrowserRouter>
+                <BrowserRouter basename="/allbridge-example-react">
                     <ChainsAndTokensProvider>
                         <ConnectionProvider>
                             <App/>
