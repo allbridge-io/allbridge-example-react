@@ -1,46 +1,55 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Allbridge Core SDK Example Project
 
-## Available Scripts
+This repository provides a simple example of how to integrate the Allbridge Core SDK into a React application. It demonstrates the essential functionalities of the SDK, including retrieving supported networks and tokens, calculating fees, estimating received amounts, and sending transactions.
 
-In the project directory, you can run:
+## Project Structure
 
-### `npm start`
+- **`src/pages/Demo.tsx`**: This component contains the minimal implementation of the core features of the Allbridge SDK.
+- **`src/services/sdk.ts`**: This service aggregates all the methods used in the `Demo` component for interacting with the Allbridge SDK.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. **Retrieving Networks and Tokens**: Fetches the list of networks and tokens that are available for transfers.
+2. **Fetching Fees**: Retrieves the fees associated with a transaction.
+3. **Calculating Received Amount**: Estimates the amount the recipient will receive after deducting the fees.
+4. **Sending Transactions**: Initiates the transfer of tokens between networks.
 
-### `npm test`
+### Note
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This example project intentionally omits any form of validation or error handling for the sake of simplicity. Integrators are expected to implement these as per their specific requirements.
 
-### `npm run build`
+## Resources
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [Official Documentation](https://docs-core.allbridge.io/)
+- [Allbridge Core SDK on GitHub](https://github.com/allbridge-io/allbridge-core-js-sdk)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Getting Started
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To run this project locally, follow these steps:
 
-### `npm run eject`
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/allbridge-io/allbridge-example-react.git
+    ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2. Navigate to the project directory:
+    ```bash
+    cd allbridge-example-react
+    ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Install the dependencies:
+    ```bash
+    npm install
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4. Start the development server:
+    ```bash
+    npm start
+    ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Visit `http://localhost:3000` in your browser to see the demo in action.
 
-## Learn More
+## License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project is licensed under the MIT License.
