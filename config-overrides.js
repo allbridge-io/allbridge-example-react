@@ -15,6 +15,7 @@ module.exports = function override(config, webpackEnv) {
         os: require.resolve('os-browserify'),
         buffer: require.resolve('buffer'),
         stream: require.resolve('stream-browserify'),
+        vm: require.resolve('vm-browserify'),
     };
 
     const isEnvDevelopment = webpackEnv === 'development';
