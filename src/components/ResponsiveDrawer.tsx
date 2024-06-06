@@ -103,7 +103,7 @@ export default function ResponsiveDrawer() {
             >
                 <Toolbar/>
                 <Routes>
-                    <Route path="/demo" element={<Demo/>}/>
+                    <Route path="" element={<Demo/>}/>
                 </Routes>
             </Box>
         </Box>
