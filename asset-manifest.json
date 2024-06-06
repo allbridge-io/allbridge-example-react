@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/allbridge-example-react/static/css/main.520ab86f.css",
-    "main.js": "/allbridge-example-react/static/js/main.76c78a14.js",
+    "main.js": "/allbridge-example-react/static/js/main.ab2e80a9.js",
     "static/js/453.809a7fa7.chunk.js": "/allbridge-example-react/static/js/453.809a7fa7.chunk.js",
     "index.html": "/allbridge-example-react/index.html",
     "main.520ab86f.css.map": "/allbridge-example-react/static/css/main.520ab86f.css.map",
-    "main.76c78a14.js.map": "/allbridge-example-react/static/js/main.76c78a14.js.map",
+    "main.ab2e80a9.js.map": "/allbridge-example-react/static/js/main.ab2e80a9.js.map",
     "453.809a7fa7.chunk.js.map": "/allbridge-example-react/static/js/453.809a7fa7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.520ab86f.css",
-    "static/js/main.76c78a14.js"
+    "static/js/main.ab2e80a9.js"
   ]
 }
