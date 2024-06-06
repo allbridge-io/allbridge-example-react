@@ -16,10 +16,8 @@ jobs:
           npm install
           npm run build
 
-      - name: Set Git config
-        run: |
-          git config user.email jenya476@gmail.com
-          git config user.name Jenya476
-
       - name: Deploy 🚀
-        run: npm run deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: build
