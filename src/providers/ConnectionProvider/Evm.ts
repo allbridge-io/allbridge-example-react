@@ -3,6 +3,8 @@ import {ChainSymbol, ChainType, RawEvmTransaction} from '@allbridge/bridge-core-
 import Web3 from 'web3';
 import {AbstractProvider} from 'web3-core';
 import {toChecksumAddress} from 'web3-utils';
+import { Buffer } from "buffer";
+window.Buffer = window.Buffer || Buffer;
 
 declare global {
     interface Window {
