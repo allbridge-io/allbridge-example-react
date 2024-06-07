@@ -3,7 +3,8 @@ import {ChainSymbol, ChainType, RawEvmTransaction} from '@allbridge/bridge-core-
 import Web3 from 'web3';
 import {AbstractProvider} from 'web3-core';
 import {toChecksumAddress} from 'web3-utils';
-import { Buffer } from "buffer";
+import {Buffer} from "buffer";
+
 window.Buffer = window.Buffer || Buffer;
 
 declare global {
@@ -15,7 +16,9 @@ declare global {
 class EvmWallet implements EvmWalletProvider {
     chainType = ChainType.EVM as const;
     web3 = new Web3(this._ethereum);
-    constructor(public chainSymbol: ChainSymbol) {}
+
+    constructor(public chainSymbol: ChainSymbol) {
+    }
 
     private get _ethereum(): AbstractProvider {
         if (!window.ethereum) {
@@ -33,11 +36,10 @@ class EvmWallet implements EvmWalletProvider {
     }
 
     async signAndSendTransaction(rawTransaction: RawEvmTransaction): Promise<string> {
-        const gasLimit = await this.web3.eth.estimateGas(rawTransaction);
-        const signedTx = await this.web3.eth.sendTransaction({
-            ...rawTransaction,
-            gas: gasLimit,
-        });
+        const gas = await this.web3.eth.estimateGas(rawTransaction);
+        // @ts-ignore
+        const feeOptions: { maxPriorityFeePerGas: string | number | undefined, maxFeePerGas: string | number | undefined } = {maxPriorityFeePerGas: null, maxFeePerGas: null};
+        const signedTx = await this.web3.eth.sendTransaction({...rawTransaction, gas, ...feeOptions});
         return signedTx.transactionHash;
     }
 }
