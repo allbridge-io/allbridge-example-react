@@ -30,7 +30,8 @@ class TronWallet implements TronWalletProvider {
 
     async signAndSendTransaction(rawTransaction: RawTronTransaction): Promise<string> {
         const signedTx = await this.tronWeb.trx.sign(rawTransaction);
-        return this.tronWeb.trx.sendRawTransaction(signedTx);
+        const res = await this.tronWeb.trx.sendRawTransaction(signedTx);
+        return res.transaction.txID;
     }
 }
 
