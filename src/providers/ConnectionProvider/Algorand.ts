@@ -1,7 +1,7 @@
 import { AlgorandWalletProvider } from './models';
 import { ChainSymbol, ChainType, RawAlgTransaction } from '@allbridge/bridge-core-sdk';
 import { PeraWalletConnect } from '@perawallet/connect';
-import algosdk, { Algodv2, decodeUnsignedTransaction, Transaction, TransactionType, waitForConfirmation } from 'algosdk';
+import { Algodv2, decodeUnsignedTransaction, Transaction, TransactionType, waitForConfirmation } from 'algosdk';
 
 class AlgorandWallet implements AlgorandWalletProvider {
     chainType = ChainType.ALG as const;
