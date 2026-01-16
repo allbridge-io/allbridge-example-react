@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import {
     TokenWithChainDetails
 } from '@allbridge/bridge-core-sdk/dist/src/tokens-info/tokens-info.model';
-import {Alert, Button, Card, CardActions, CardContent, Grid, Typography} from '@mui/material';
-import {FeePaymentMethod} from '@allbridge/bridge-core-sdk/dist/src/models';
+import { Alert, Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material';
+import { FeePaymentMethod } from '@allbridge/bridge-core-sdk/dist/src/models';
 
 interface SummaryProps {
     sourceToken?: TokenWithChainDetails;
@@ -17,7 +17,7 @@ interface SummaryProps {
     txId?: string;
 }
 
-const Summary: FC<SummaryProps> = ({amount, receivedAmount, paymentMethod, sourceToken, destinationToken, sourceAccount, destinationAccount, send, txId}) => {
+const Summary: FC<SummaryProps> = ({ amount, receivedAmount, paymentMethod, sourceToken, destinationToken, sourceAccount, destinationAccount, send, txId }) => {
     return <Card>
         {txId && <Alert severity="success">{txId}</Alert>}
         <Grid container columnSpacing={2} rowGap={0} rowSpacing={0}>
@@ -30,7 +30,7 @@ const Summary: FC<SummaryProps> = ({amount, receivedAmount, paymentMethod, sourc
                     <Typography variant="body2" color="text.secondary">
                         {sourceToken?.chainName} {sourceToken?.symbol}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color="text.secondary" noWrap title={sourceAccount}>
                         Sender account: {sourceAccount}
                     </Typography>
                 </CardContent>
@@ -44,7 +44,7 @@ const Summary: FC<SummaryProps> = ({amount, receivedAmount, paymentMethod, sourc
                     <Typography variant="body2" color="text.secondary">
                         {destinationToken?.chainName} {destinationToken?.symbol}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color="text.secondary" noWrap title={destinationAccount}>
                         Recipient account: {destinationAccount}
                     </Typography>
                 </CardContent>

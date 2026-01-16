@@ -1,28 +1,29 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ChainsAndTokens from '../components/ChainsAndTokens';
-import {Divider, Grid, Box} from '@mui/material';
+import { Divider, Grid, Box } from '@mui/material';
 import {
     ChainDetailsWithTokens,
     TokenWithChainDetails
 } from '@allbridge/bridge-core-sdk/dist/src/tokens-info/tokens-info.model';
-import {ChainsAndTokensContext} from '../providers/ChainsAndTokensProvider';
-import {FeePaymentMethod, Messenger} from '@allbridge/bridge-core-sdk/dist/src/models';
+import { ChainsAndTokensContext } from '../providers/ChainsAndTokensProvider';
+import { FeePaymentMethod, Messenger } from '@allbridge/bridge-core-sdk/dist/src/models';
 import Summary from '../components/Summary';
 import FeePaymentMethodSelector from '../components/FeePaymentMethodSelector';
 import AmountSelector from '../components/AmountSelector';
 import {
     getAmountToBeReceived,
     getGasFeeOptions,
+    getRawTransactionForAlgorand,
     getRawTransactionForEvm, getRawTransactionForSolana, getRawTransactionForStellar, getRawTransactionForTron,
 } from '../services/sdk';
 import Big from 'big.js';
-import {ChainType, GasFeeOptions, SendParams} from '@allbridge/bridge-core-sdk';
+import { ChainType, GasFeeOptions, SendParams } from '@allbridge/bridge-core-sdk';
 import Accounts from '../components/Accounts';
-import {ConnectionContext} from '../providers/ConnectionProvider/ConnectionProvider';
+import { ConnectionContext } from '../providers/ConnectionProvider/ConnectionProvider';
 
 function Demo() {
-    const {chains} = useContext(ChainsAndTokensContext);
-    const {account, disconnect, walletProvider} = useContext(ConnectionContext);
+    const { chains } = useContext(ChainsAndTokensContext);
+    const { account, disconnect, walletProvider } = useContext(ConnectionContext);
     const [sourceToken, setSourceToken] = useState<TokenWithChainDetails>();
     const [destinationToken, setDestinationToken] = useState<TokenWithChainDetails>();
     const [paymentMethod, setPaymentMethod] = useState<FeePaymentMethod>(FeePaymentMethod.WITH_NATIVE_CURRENCY);
@@ -39,12 +40,12 @@ function Demo() {
     }
 
     const loadGasFeeOptions = async (sourceToken: TokenWithChainDetails,
-                                     destinationToken: TokenWithChainDetails): Promise<void> => {
+        destinationToken: TokenWithChainDetails): Promise<void> => {
         setGasFeeOptions(await getGasFeeOptions(sourceToken, destinationToken));
     }
     const calcReceivedAmount = async (amount: string,
-                                      sourceToken: TokenWithChainDetails,
-                                      destinationToken: TokenWithChainDetails): Promise<void> => {
+        sourceToken: TokenWithChainDetails,
+        destinationToken: TokenWithChainDetails): Promise<void> => {
         const amountWithoutFee = Big(amount).minus(fee).round(sourceToken.decimals).toFixed()
         setReceivedAmount(Big(amountWithoutFee).gt(0) ? await getAmountToBeReceived(amountWithoutFee, sourceToken, destinationToken) : '0');
     }
@@ -74,6 +75,11 @@ function Demo() {
             }
             case ChainType.SRB: {
                 const rawTransaction = await getRawTransactionForStellar(params);
+                txId = await walletProvider.signAndSendTransaction(rawTransaction);
+                break;
+            }
+            case ChainType.ALG: {
+                const rawTransaction = await getRawTransactionForAlgorand(params, walletProvider.algod);
                 txId = await walletProvider.signAndSendTransaction(rawTransaction);
                 break;
             }
@@ -133,18 +139,18 @@ function Demo() {
 
     return (
         <Box className="Main">
-            <Grid container spacing={2} sx={{mb: 2}}>
+            <Grid container spacing={2} sx={{ mb: 2 }}>
                 <Grid item xs={12} md={6}>
                     <ChainsAndTokens title="Source token" chains={chains} selectedToken={sourceToken}
-                                     handleSelectedTokenChange={setSourceToken}></ChainsAndTokens>
+                        handleSelectedTokenChange={setSourceToken}></ChainsAndTokens>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <ChainsAndTokens title="Destination token" chains={chains} selectedToken={destinationToken}
-                                     handleSelectedTokenChange={setDestinationToken}></ChainsAndTokens>
+                        handleSelectedTokenChange={setDestinationToken}></ChainsAndTokens>
                 </Grid>
             </Grid>
 
-            <Grid container spacing={2} sx={{mb: 2}}>
+            <Grid container spacing={2} sx={{ mb: 2 }}>
                 <Grid item xs={12} md={6}>
                     <AmountSelector amount={amount} handleChangeAmount={setAmount}></AmountSelector>
                 </Grid>
@@ -155,17 +161,17 @@ function Demo() {
 
             <Accounts selectedSourceToken={sourceToken} destinationAccount={destinationAccount} handleChangeDestinationAccount={setDestinationAccount}></Accounts>
 
-            <Divider sx={{mb: 2, mt: 2}}/>
+            <Divider sx={{ mb: 2, mt: 2 }} />
 
             <Summary amount={amount}
-                     receivedAmount={receivedAmount}
-                     paymentMethod={paymentMethod}
-                     sourceToken={sourceToken}
-                     destinationToken={destinationToken}
-                     sourceAccount={account}
-                     destinationAccount={destinationAccount}
-                     send={send}
-                     txId={txId}></Summary>
+                receivedAmount={receivedAmount}
+                paymentMethod={paymentMethod}
+                sourceToken={sourceToken}
+                destinationToken={destinationToken}
+                sourceAccount={account}
+                destinationAccount={destinationAccount}
+                send={send}
+                txId={txId}></Summary>
         </Box>
     );
 }

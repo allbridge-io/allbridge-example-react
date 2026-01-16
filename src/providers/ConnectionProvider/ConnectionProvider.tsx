@@ -1,11 +1,12 @@
-import React, {createContext, useState} from 'react';
-import {ChainSymbol} from '@allbridge/bridge-core-sdk';
+import React, { createContext, useState } from 'react';
+import { ChainSymbol } from '@allbridge/bridge-core-sdk';
 import EvmWallet from './Evm';
 import SolanaWallet from './Solana';
 import TronWallet from './Tron';
 import StellarWallet from './Stellar';
+import AlgorandWallet from './Algorand';
 
-type Wallet = EvmWallet | SolanaWallet | TronWallet | StellarWallet;
+type Wallet = EvmWallet | SolanaWallet | TronWallet | StellarWallet | AlgorandWallet;
 
 interface ConnectContextI {
     account?: string,
@@ -25,7 +26,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-const ConnectionProvider: React.FC<Props> = ({children}) => {
+const ConnectionProvider: React.FC<Props> = ({ children }) => {
     const [account, setAccount] = useState<string | undefined>();
     const [walletProvider, setWalletProvider] = useState<Wallet | undefined>();
 
@@ -48,7 +49,7 @@ const ConnectionProvider: React.FC<Props> = ({children}) => {
         setWalletProvider(undefined);
     }
 
-    return <ConnectionContext.Provider value={{account, connect, disconnect, walletProvider}}>
+    return <ConnectionContext.Provider value={{ account, connect, disconnect, walletProvider }}>
         {children}
     </ConnectionContext.Provider>;
 };
@@ -65,6 +66,9 @@ function getWalletProvider(chainSymbol: ChainSymbol): Wallet {
         }
         case ChainSymbol.SRB: {
             return new StellarWallet();
+        }
+        case ChainSymbol.ALG: {
+            return new AlgorandWallet();
         }
         default: {
             return new EvmWallet(chainSymbol);

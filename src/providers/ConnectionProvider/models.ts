@@ -3,7 +3,7 @@ import {
     ChainType,
     RawBridgeSolanaTransaction,
     RawEvmTransaction, RawSorobanTransaction,
-    RawTransaction, RawTronTransaction
+    RawTransaction, RawTronTransaction, RawAlgTransaction
 } from '@allbridge/bridge-core-sdk';
 import Web3 from 'web3';
 // @ts-expect-error import tron
@@ -32,4 +32,8 @@ export interface TronWalletProvider extends WalletProvider<RawTronTransaction> {
 
 export interface StellarWalletProvider extends WalletProvider<RawSorobanTransaction> {
     chainType: ChainType.SRB;
+}
+
+export interface AlgorandWalletProvider extends WalletProvider<RawAlgTransaction> {
+    chainType: ChainType.ALG;
 }

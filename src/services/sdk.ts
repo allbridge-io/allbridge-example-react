@@ -6,8 +6,9 @@ import {
     NodeRpcUrls, SendParams,
     TokenWithChainDetails
 } from '@allbridge/bridge-core-sdk';
-import {ChainDetailsWithTokens} from '@allbridge/bridge-core-sdk';
+import { ChainDetailsWithTokens } from '@allbridge/bridge-core-sdk';
 import {
+    RawAlgTransaction,
     RawBridgeSolanaTransaction,
     RawEvmTransaction, RawSorobanTransaction,
     RawTronTransaction
@@ -15,6 +16,7 @@ import {
 import type Web3 from 'web3';
 // @ts-expect-error import tron
 import TronWeb from 'tronweb';
+import { Algodv2 } from 'algosdk';
 
 const SDK_NODE_URLS: NodeRpcUrls = {
     [ChainSymbol.SOL]: 'https://api.mainnet-beta.solana.com',
@@ -29,12 +31,12 @@ export const getChains = async (): Promise<ChainDetailsWithTokens[]> => {
     return Object.values(await sdk.chainDetailsMap());
 }
 export const getAmountToBeReceived = async (amount: string,
-                                            sourceToken: TokenWithChainDetails,
-                                            destinationToken: TokenWithChainDetails): Promise<string> => {
+    sourceToken: TokenWithChainDetails,
+    destinationToken: TokenWithChainDetails): Promise<string> => {
     return sdk.getAmountToBeReceived(amount, sourceToken, destinationToken, Messenger.ALLBRIDGE);
 }
 export const getGasFeeOptions = async (sourceToken: TokenWithChainDetails,
-                                       destinationToken: TokenWithChainDetails): Promise<GasFeeOptions> => {
+    destinationToken: TokenWithChainDetails): Promise<GasFeeOptions> => {
     return sdk.getGasFeeOptions(sourceToken, destinationToken, Messenger.ALLBRIDGE);
 }
 
@@ -49,4 +51,7 @@ export const getRawTransactionForSolana = async (params: SendParams): Promise<Ra
 }
 export const getRawTransactionForStellar = async (params: SendParams): Promise<RawSorobanTransaction> => {
     return await sdk.bridge.rawTxBuilder.send(params) as RawSorobanTransaction;
+}
+export const getRawTransactionForAlgorand = async (params: SendParams, algod: Algodv2): Promise<RawAlgTransaction> => {
+    return await sdk.bridge.rawTxBuilder.send(params, algod) as RawAlgTransaction;
 }
